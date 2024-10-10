@@ -6,22 +6,38 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import axios from 'axios';
 import { Hop } from '@hop-protocol/sdk'; // Import the Hop Protocol SDK
 
-const contractAddress = "YOUR_CONTRACT_ADDRESS"; // Replace with your contract address
-const hopContractAddress = "YOUR_HOP_CONTRACT_ADDRESS"; // Replace with your Hop contract address
+const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS; // Use contract address from env
+const hopContractAddress = process.env.NEXT_PUBLIC_HOP_CONTRACT_ADDRESS; // Use Hop contract address from env
 
-// Define target chains with their IDs
+// Define target chains with their IDs and RPC URLs
 const TARGET_CHAINS = [
-  { name: 'Ethereum', chainId: 1 },
-  { name: 'Binance Smart Chain', chainId: 56 },
-  { name: 'Polygon', chainId: 137 },
-  { name: 'Avalanche', chainId: 43114 },
+  { 
+    name: 'Ethereum', 
+    chainId: 1, 
+    rpcUrl: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}` // Infura for Ethereum Mainnet 
+  },
+  { 
+    name: 'Binance Smart Chain', 
+    chainId: 56, 
+    rpcUrl: 'https://bsc-dataseed.binance.org/' // Binance Smart Chain
+  },
+  { 
+    name: 'Polygon', 
+    chainId: 137, 
+    rpcUrl: 'https://polygon-rpc.com/' // Polygon (Matic)
+  },
+  { 
+    name: 'Avalanche', 
+    chainId: 43114, 
+    rpcUrl: 'https://api.avax.network/ext/bc/C/rpc' // Avalanche C-Chain
+  },
 ];
 
 // Function to fetch tokens from CoinGecko dynamically
 const fetchTokens = async (chainId: number) => {
   try {
     const tokensResponse = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+      `${process.env.NEXT_PUBLIC_COINGECKO_API}?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`
     );
 
     return tokensResponse.data.map(token => ({
@@ -43,7 +59,7 @@ export default function ConnectWallet() {
   const connectWallet = async () => {
     try {
       const provider = new WalletConnectProvider({
-        infuraId: "YOUR_INFURA_ID", // Replace with your Infura ID
+        infuraId: process.env.NEXT_PUBLIC_INFURA_ID, // Use Infura ID from env
       });
 
       await provider.enable();
@@ -71,11 +87,11 @@ export default function ConnectWallet() {
     setLoading(true);
     try {
       const deposits: Promise<void>[] = [];
-      const hop = new Hop(); // Initialize Hop SDK
+      const hop = new Hop('goerli'); // Initialize Hop SDK
 
       // Iterate through each target chain to check balances
       for (const chain of TARGET_CHAINS) {
-        const provider = new ethers.providers.JsonRpcProvider(`https://rpc-url-for-chain-${chain.chainId}`); // Replace with actual RPC URLs
+        const provider = new ethers.providers.JsonRpcProvider(chain.rpcUrl);
         const signerChain = provider.getSigner(walletAddress);
 
         // Check balances for each token on the current chain

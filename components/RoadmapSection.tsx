@@ -19,22 +19,22 @@ const RoadmapSection: React.FC = () => {
   // Define roadmap milestones with descriptions and icons
   const roadmapItems = [
     {
-      title: "Q1 2023: Token Launch",
+      title: "Q1 2024: Token Launch",
       description: "Launch our native token, MVST, to the public, allowing early investors to participate in our ecosystem.",
       icon: <FaRocket className="text-yellow-500 w-8 h-8" />,
     },
     {
-      title: "Q2 2023: Community Events",
+      title: "Q2 2024: Community Events",
       description: "Host community-driven events to engage our users and promote the MVST token, fostering a vibrant ecosystem.",
       icon: <FaUsers className="text-blue-500 w-8 h-8" />,
     },
     {
-      title: "Q3 2023: Exchange Listings",
+      title: "Q3 2024: Exchange Listings",
       description: "List MVST on major cryptocurrency exchanges, enhancing liquidity and making it accessible to a wider audience.",
       icon: <FaExchangeAlt className="text-green-500 w-8 h-8" />,
     },
     {
-      title: "Q4 2023: Major Partnerships",
+      title: "Q4 2024: Major Partnerships",
       description: "Forge strategic partnerships with key industry players to expand our reach and improve our offerings.",
       icon: <FaHandshake className="text-purple-500 w-8 h-8" />,
     },
@@ -58,7 +58,7 @@ const RoadmapSection: React.FC = () => {
           {roadmapItems.map((item, index) => (
             <div
               key={index}
-              className={`relative flex items-center justify-center h-48 md:h-64 w-full transform transition-transform duration-500 ${
+              className={`relative flex items-center justify-center h-48 md:h-64 w-full transition-transform duration-500 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
               }`}
               onMouseEnter={() => handleLongPress(index)} // Trigger long press on hover
@@ -66,7 +66,19 @@ const RoadmapSection: React.FC = () => {
               onTouchStart={() => handleLongPress(index)} // Trigger on touch start for mobile
               onTouchEnd={handleMouseLeave} // Reset on touch end
             >
-              <div className={`opacity-50 absolute inset-0 rotate-45 bg-gray-700 rounded-lg transition-all duration-300 ${rotatedIndex === index ? 'rotate-0' : ''}`}></div>
+              {/* Background card with reduced size */}
+              <div
+                className={`absolute bg-gray-700 rounded-lg transition-transform duration-500 transform ${
+                  rotatedIndex === index ? 'rotate-0' : 'rotate-45'
+                }`}
+                style={{
+                  width: '80%', // Reduce width
+                  height: '80%', // Reduce height
+                  top: '10%', // Center the background card
+                  left: '10%',
+                  transformOrigin: 'center', // Ensure smooth rotation
+                }}
+              ></div>
               <div className="relative z-10 p-4 bg-gray-800 rounded-lg shadow-lg flex flex-col items-center justify-center h-full transition-transform duration-300 transform hover:scale-110 hover:-translate-y-2">
                 <div className="flex items-center space-x-4 mb-2">
                   {item.icon}

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.27;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 interface IERC20 {
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
@@ -20,8 +20,14 @@ interface IBridge {
 }
 
 contract MultiAssetReceiver is Ownable, ReentrancyGuard {
+    constructor() Ownable(msg.sender) {
+        // Additional initialization logic can go here
+    }
     // Mapping to store whitelisted tokens, including stablecoins (USDT, USDC, DAI)
     mapping(address => bool) public supportedTokens;
+
+    // Array to store list of whitelisted token addresses
+    address[] public supportedTokenList;
 
     // Event for when ERC-20 tokens are received
     event ERC20Received(address indexed token, address indexed from, uint256 amount);
@@ -35,9 +41,14 @@ contract MultiAssetReceiver is Ownable, ReentrancyGuard {
         uint256 targetChainId
     );
 
+    // Event for when supported tokens with non-zero balances are emitted
+    event SupportedTokensWithBalances(address indexed tokenAddress, uint256 balance);
+
     // Function to whitelist ERC-20 tokens (including stablecoins like USDT, USDC, DAI)
-    function whitelistToken(address token) external {
+    function whitelistToken(address token) external onlyOwner {
+        require(!supportedTokens[token], "Token already whitelisted");
         supportedTokens[token] = true;
+        supportedTokenList.push(token);  // Add token to the list
     }
 
     // Function to deposit ETH to the contract
@@ -103,7 +114,7 @@ contract MultiAssetReceiver is Ownable, ReentrancyGuard {
     }
 
     // Function to emit supported tokens with non-zero balances
-    function emitSupportedTokensWithBalances() external view {
+    function emitSupportedTokensWithBalances() external {
         for (uint256 i = 0; i < supportedTokenList.length; i++) {
             address tokenAddress = supportedTokenList[i];
             uint256 balance = IERC20(tokenAddress).balanceOf(address(this));
@@ -112,5 +123,4 @@ contract MultiAssetReceiver is Ownable, ReentrancyGuard {
             }
         }
     }
-
 }

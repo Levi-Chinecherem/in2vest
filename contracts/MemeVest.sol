@@ -5,9 +5,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MemeVest is ERC20, Ownable {
-    uint256 private constant _initialSupply = 1_000_000_000 * 10 ** 18; // 1 billion tokens
+    uint256 private constant _initialSupply = 1_000_000_000_000 * 10 ** 18; // 1 trillion tokens
 
-    constructor() ERC20("MemeVest", "MVST") {
+    // Constructor assigns the initial supply to the deployer (owner)
+    constructor() ERC20("MemeVest", "MVST") Ownable(msg.sender) {
         _mint(msg.sender, _initialSupply);
     }
 

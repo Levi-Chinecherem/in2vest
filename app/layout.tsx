@@ -3,7 +3,7 @@ import { Footer } from '@/components/Footer';
 import './globals.css';
 
 export const metadata = {
-  title: 'My Dapp',
+  title: 'In2Vest',
   description: 'A beautiful, modern Web3 DApp',
 };
 

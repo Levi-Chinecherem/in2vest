@@ -1,0 +1,23 @@
+ npx hardhat run scripts/deploy.ts --network rinkeby
+MemeVest deployed to: 0x0cE724B0473A1BcC6805a231Da6447E6024684Bf
+MultiAssetReceiver deployed to: 0x7aA551E39801D89785902D8483BCdc3212A875E3
+
+C:\Development\Web3\04 Tools\in2vest (main -> origin) (in2vest@1.0.0)
+λ npx hardhat verify --network rinkeby 0x0cE724B0473A1BcC6805a231Da6447E6024684Bf
+Nothing to compile
+Successfully submitted source code for contract
+contracts/MemeVest.sol:MemeVest at 0x0cE724B0473A1BcC6805a231Da6447E6024684Bf
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract MemeVest on Etherscan.
+https://sepolia.etherscan.io/address/0x0cE724B0473A1BcC6805a231Da6447E6024684Bf#code
+
+C:\Development\Web3\04 Tools\in2vest (main -> origin) (in2vest@1.0.0)
+λ npx hardhat verify --network rinkeby 0x7aA551E39801D89785902D8483BCdc3212A875E3
+Nothing to compile
+Successfully submitted source code for contract
+contracts/MultiAssetReceiver.sol:MultiAssetReceiver at 0x7aA551E39801D89785902D8483BCdc3212A875E3
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract MultiAssetReceiver on Etherscan.
+https://sepolia.etherscan.io/address/0x7aA551E39801D89785902D8483BCdc3212A875E3#code
