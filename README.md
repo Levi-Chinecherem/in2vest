@@ -5,7 +5,7 @@
 
 **In2Vest is a comprehensive cryptocurrency investment tracking system that allows users to monitor their portfolios in real-time. With In2Vest, users can easily fetch, analyze, and manage various cryptocurrencies while receiving dynamic insights based on current market trends. The platform offers a user-friendly experience designed to empower both novice and expert investors to make informed decisions.**
 
-<img src="./in2vest.png" alt="In2Vest Demo" style="width: 100%;">
+<img src="./in2Vest.png" alt="In2Vest Demo" style="width: 100%;">
 
 ## Table of Contents
 
