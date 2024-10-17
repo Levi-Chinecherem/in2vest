@@ -1,6 +1,6 @@
 "use client"; // Ensure this is a Client Component
 
-import ConnectWallet from '@/components/ConnectWallet';
+import ConnectWallet from '../components/ConnectWallet';
 
 export default function ExecutionPage() {
   return (
